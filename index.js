@@ -1,9 +1,12 @@
 const seed = require('seed-random');
 
-const { getMap } = require('./core/map');
+const { getHeightMap, getTilesFromHeight } = require('./core/map');
 const { drawSimplexMap } = require('./core/draw');
 
-const map = getMap({
+const LEVEL = 0;
+const MOUNTAIN_LEVEL = 0.45;
+
+const heightMap = getHeightMap({
     width: 120,
     height: 40,
     seed: Math.random(),
@@ -11,8 +14,15 @@ const map = getMap({
     octaveY: 10
 });
 
+const tilesMap = getTilesFromHeight({
+    heightMap,
+    level: LEVEL,
+    mountainLevel: MOUNTAIN_LEVEL
+});
+
 drawSimplexMap({
-    map,
-    level: 0,
-    mountainLevel: 0.45
+    heightMap,
+    tilesMap,
+    level: LEVEL,
+    mountainLevel: MOUNTAIN_LEVEL
 });

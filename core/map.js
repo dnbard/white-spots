@@ -1,6 +1,8 @@
 const perlin = require('./perlin');
 
-exports.getMap = function({ width, height, seed, octaveX = 20, octaveY = 20 }){
+const TILES = require('../enums/tiles');
+
+exports.getHeightMap = function({ width, height, seed, octaveX = 20, octaveY = 20 }){
     if (seed){
         perlin.seed(seed);
     }
@@ -20,4 +22,10 @@ exports.getMap = function({ width, height, seed, octaveX = 20, octaveY = 20 }){
     }
 
     return result;
+}
+
+exports.getTilesFromHeight = function({ heightMap, level, mountainLevel }){
+    return heightMap.map(arr => {
+        return arr.map(el => el > level ? el > mountainLevel ? TILES.MOUNTAIN : TILES.PLAIN : TILES.WATER);
+    });
 }
